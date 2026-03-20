@@ -6,7 +6,7 @@ const tarefas = ref([
     { id: 3, desc: 'Trabalho DevWeb', status: 'pendente' },
 ]);
 
-const novaTarefa = ref('');
+let novaTarefa = ref('');
 
 let posicao_alterar = ref(-1);
 
@@ -40,7 +40,11 @@ function editTarefa(item) {
 
 function marcarConcluida(id) {
     const posicao = tarefas.value.findIndex(t => t.id == id);
-    
+    if (tarefas.value[posicao].status=='pendente'){
+        tarefas.value[posicao].status = 'concluida';
+    } else {
+        tarefas.value[posicao].status = 'pendente';
+    }
 }
 </script>
 
@@ -55,6 +59,7 @@ function marcarConcluida(id) {
         <li v-for="item in tarefas" 
         :key="item.id" 
         @click="marcarConcluida(item.id)"
+        :class="{concluida: item.status=='concluida'}"
         >
             {{ item.desc }}
             <span>
@@ -85,7 +90,7 @@ div.container h1 {
     font-weight: bolder;
 }
 
-/* Estilos para a seção de adição de tarefas */
+/* Estilo */
 
 div.container ul li {
     cursor: pointer;
@@ -94,7 +99,7 @@ div.container ul li {
     text-decoration: line-through;
 }
 
-/* Estilos para a seção de adição de tarefas */
+/* Estilo */
 
 div.container div.addd{
     display: flex;
