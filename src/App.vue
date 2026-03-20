@@ -89,7 +89,9 @@ div.container h1 {
     padding: 0 0 1rem 0;
     font-weight: bolder;
 }
-
+div.container ul {
+    padding: 0.8vw 0 0 0;
+}
 /* Estilo */
 
 div.container ul li {
@@ -109,7 +111,7 @@ div.container div.addd input {
     border: none;
     border-radius: 5px;
     padding: 5px 10px;
-    
+    color: rgba(218, 0, 54, 0.932);
 }
 input::placeholder {
   color: rgb(218, 0, 55);
