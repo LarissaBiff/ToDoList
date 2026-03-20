@@ -46,6 +46,11 @@ function marcarConcluida(id) {
         tarefas.value[posicao].status = 'pendente';
     }
 }
+
+function pesquisarTarefa() {
+    const termo = novaTarefa.value.toLowerCase();
+    return tarefas.value.filter(t => t.desc.toLowerCase().includes(termo));
+}
 </script>
 
 <template>
@@ -68,6 +73,7 @@ function marcarConcluida(id) {
             </span>
         </li>
     </ul>
+    <input type="text" v-model="pesquisarTarefa">
 </div>
 </template>
 
