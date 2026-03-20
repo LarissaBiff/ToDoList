@@ -8,7 +8,7 @@ const tarefas = ref([
 
 const novaTarefa = ref('');
 
-const posicao_alterar = ref(-1);
+let posicao_alterar = ref(-1);
 
 function addTarefa() {
     if (posicao_alterar.value == -1) {
@@ -37,6 +37,11 @@ function editTarefa(item) {
     novaTarefa.value = tarefas.value[posicao_alterar].desc;
 
 }
+
+function marcarConcluida(id) {
+    const posicao = tarefas.value.findIndex(t => t.id == id);
+    
+}
 </script>
 
 <template>
@@ -47,7 +52,10 @@ function editTarefa(item) {
         <button @click="addTarefa">Add</button>
     </div>
     <ul>
-        <li v-for="item in tarefas" :key="item.id">
+        <li v-for="item in tarefas" 
+        :key="item.id" 
+        @click="marcarConcluida(item.id)"
+        >
             {{ item.desc }}
             <span>
                 <a href="#" @click.prevent="deleteTarefa(item)">Delete</a>
@@ -74,10 +82,34 @@ div.container h1 {
     color: rgb(133, 206, 133);
     text-align: center;
     padding: 0 0 1rem 0;
+    font-weight: bolder;
 }
+
+/* Estilos para a seção de adição de tarefas */
+
+div.container ul li {
+    cursor: pointer;
+}
+.concluida {
+    text-decoration: line-through;
+}
+
+/* Estilos para a seção de adição de tarefas */
+
 div.container div.addd{
     display: flex;
     gap: 0.5vw;
+}
+div.container div.addd input {
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    
+}
+input::placeholder {
+  color: rgb(218, 0, 55);
+  opacity: 0.7;
+  font-weight: bold;
 }
 div.container div.addd button{
     border: none;
@@ -85,7 +117,7 @@ div.container div.addd button{
     padding: 5px 10px;
     color: rgba(218, 0, 54, 0.932);
     font-weight: bolder;
-    background-color: wheat;
+    background-color: rgb(255, 255, 255);
 }
 
 div.container ul span a {
