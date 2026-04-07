@@ -17,7 +17,7 @@ function addTarefa() {
             id: maiorID + 1,
             desc: novaTarefa.value,
             status: 'pendente'
-    });
+        });
     } else {
         tarefas.value[posicao_alterar.value].desc =  novaTarefa.value
         posicao_alterar.value = -1
@@ -32,9 +32,8 @@ function deleteTarefa(item) {
 }
 
 function editTarefa(item) {
-    posicao_alterar = tarefas.value.findIndex(t => t.id === item.id);
-    posicao.value = posicao;
-    novaTarefa.value = tarefas.value[posicao_alterar].desc;
+    posicao_alterar.value = tarefas.value.findIndex(t => t.id === item.id);
+    novaTarefa.value = tarefas.value[posicao_alterar.value].desc;
 
 }
 
@@ -62,18 +61,22 @@ function pesquisarTarefa() {
     </div>
     <ul>
         <li v-for="item in tarefas" 
-        :key="item.id" 
-        @click="marcarConcluida(item.id)"
-        :class="{concluida: item.status=='concluida'}"
-        >
-            {{ item.desc }}
+        :key="item.id" >
+
+            <span
+            @click="marcarConcluida(item.id)"
+            :class="{concluida: item.status=='concluida'}">
+                {{ item.desc }}
+            </span>
+
             <span>
                 <a href="#" @click.prevent="deleteTarefa(item)">Delete</a>
-                <a href="#" @click.prevent="editeTarefa(item)">Edit</a>
+                <a href="#" @click.prevent="editTarefa(item)">Edit</a>
             </span>
+            
         </li>
     </ul>
-    <input type="text" v-model="pesquisarTarefa">
+
 </div>
 </template>
 
