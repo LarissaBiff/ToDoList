@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 const tarefas = ref([
     { id: 1, desc: 'Prova Geografia', status: 'pendente' },
     { id: 2, desc: 'Prova História', status: 'concluida' },
@@ -9,6 +9,24 @@ const tarefas = ref([
 let novaTarefa = ref('');
 
 let posicao_alterar = ref(-1);
+
+const tarefasPendentes = computed(() => {
+    return tarefas.value.filter(t => t.status == 'pendente').length;
+})
+
+const tarefasConcluidas = computed(() => {
+    return tarefas.value.filter(t => t.status == 'concluida').length;
+})
+
+const filtro = ref('')
+
+const tarefasFiltradas = computed(() => {
+    if (filtro.value.trim() == ''){
+        return tarefas.value
+    } else {
+        return tarefas.value.filter(t => t.desc.includes(filtro.value))
+    }
+})
 
 function addTarefa() {
     if (posicao_alterar.value == -1) {
@@ -50,6 +68,10 @@ function pesquisarTarefa() {
     const termo = novaTarefa.value.toLowerCase();
     return tarefas.value.filter(t => t.desc.toLowerCase().includes(termo));
 }
+
+function ordenar() {
+    tarefas.value.sort((a, b) => a.desc.localeCompare(b.desc, 'pt-BR'))
+}
 </script>
 
 <template>
@@ -60,7 +82,7 @@ function pesquisarTarefa() {
         <button @click="addTarefa">Add</button>
     </div>
     <ul>
-        <li v-for="item in tarefas" 
+        <li v-for="item in tarefasFiltradas" 
         :key="item.id" >
 
             <span
@@ -76,6 +98,18 @@ function pesquisarTarefa() {
             
         </li>
     </ul>
+        <div class="addd">
+            <input type="text" v-model="filtro" placeholder="filtrar tarefa..."  >
+            <button @click.prevent="ordenar()">Ordenar</button>
+        </div>
+    <div class="quan">
+        <span>
+            Pendentes: {{ tarefasPendentes }}
+        </span>
+        <span>
+            Concluida: {{ tarefasConcluidas }}
+        </span>
+    </div>
 
 </div>
 </template>
@@ -139,5 +173,10 @@ div.container div.addd button{
 div.container ul span a {
     margin-left: 1vw;
     color: rgb(133, 206, 133);
+}
+
+div.quan span{
+    color:  rgb(133, 206, 133);
+    font-weight: bolder;
 }
 </style>
