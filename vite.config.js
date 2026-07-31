@@ -6,7 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/ToDoList/',
+  base: process.env.VERCEL ? '/' : '/ToDoList/',
   plugins: [
     vue(),
     vueDevTools(),
